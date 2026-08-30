@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harmonic Patterns Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Light theme (default) */
+    --gold: #8a6000;
+    --gold-light: #6b4a00;
+    --gold-dim: #a07820;
+    --bg-deep: #f5f0e8;
+    --bg-card: #ffffff;
+    --bg-card2: #f0ebe0;
+    --border: #d8ceb8;
+    --border-gold: rgba(138,96,0,0.25);
+    --text-primary: #1a1610;
+    --text-muted: #6b6050;
+    --text-accent: #8a6000;
+    --bull: #1a7a4a;
+    --bull-dim: #a8e6c8;
+    --bear: #c03030;
+    --bear-dim: #f8c8c8;
+    --blue: #1a5bb8;
+    --purple: #6030a0;
+    --nav-bg: rgba(245,240,232,0.97);
+    --header-grad: rgba(138,96,0,0.06);
+    --card-grad: rgba(138,96,0,0.05);
+    --rule-entry-grad: rgba(26,122,74,0.06);
+    --rule-sl-grad: rgba(192,48,48,0.06);
+    --rule-tp-grad: rgba(26,91,184,0.06);
+    --rule-conf-grad: rgba(96,48,160,0.06);
+    --rule-rel-grad: rgba(138,96,0,0.06);
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --rtc-grad: rgba(96,48,160,0.06);
+    --sum-grad: rgba(26,91,184,0.06);
+  }
+
+  body.dark {
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: #8a6f2e;
+    --bg-deep: #0a0c10;
+    --bg-card: #0f1219;
+    --bg-card2: #13171f;
+    --border: #1e2535;
+    --border-gold: rgba(201,168,76,0.25);
+    --text-primary: #e8e0d0;
+    --text-muted: #8a8fa0;
+    --text-accent: #c9a84c;
+    --bull: #3ecf8e;
+    --bull-dim: #1a5e41;
+    --bear: #f16363;
+    --bear-dim: #6b2424;
+    --blue: #5b9cf6;
+    --purple: #a78bfa;
+    --nav-bg: rgba(10,12,16,0.97);
+    --header-grad: rgba(201,168,76,0.06);
+    --card-grad: rgba(201,168,76,0.05);
+    --rule-entry-grad: rgba(62,207,142,0.06);
+    --rule-sl-grad: rgba(241,99,99,0.06);
+    --rule-tp-grad: rgba(91,156,246,0.06);
+    --rule-conf-grad: rgba(167,139,250,0.06);
+    --rule-rel-grad: rgba(201,168,76,0.06);
+    --shadow: none;
+    --rtc-grad: rgba(167,139,250,0.06);
+    --sum-grad: rgba(91,156,246,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body.dark::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 56px 24px 40px;
+    border-bottom: 1px solid var(--border-gold);
+    background: linear-gradient(180deg, var(--header-grad) 0%, transparent 100%);
+  }
+
+  .controls-row {
+    position: fixed;
+    top: 16px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 9999;
+    align-items: center;
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: 1px solid var(--border-gold);
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active,
+  .lang-btn:hover {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* Theme toggle button */
+  .theme-btn {
+    background: transparent;
+    border: 1px solid var(--border-gold);
+    color: var(--text-muted);
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .theme-btn:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.12);
+  }
+
+  .header-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    text-shadow: 0 0 40px rgba(201,168,76,0.15);
+  }
+
+  .header-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ── Nav Pills ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-inner {
+    display: flex;
+    gap: 6px;
+    width: max-content;
+    margin: 0 auto;
+  }
+
+  .nav-pill {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .nav-pill:hover {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  .nav-pill.active {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── Main Layout ── */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── Section Headers ── */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    letter-spacing: 0.4em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* ── Pattern Cards ── */
+  .pattern-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+    scroll-margin-top: 64px;
+    box-shadow: var(--shadow);
+  }
+
+  .pattern-card:hover {
+    border-color: var(--border-gold);
+  }
+
+  .card-header {
+    padding: 24px 32px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    background: linear-gradient(90deg, var(--card-grad) 0%, transparent 60%);
+  }
+
+  .card-index {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--gold-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+
+  .card-title-ar {
+    display: none;
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+  }
+
+  .card-body {
+    padding: 28px 32px;
+  }
+
+  /* Pattern description as bullet list */
+  .pattern-desc,
+  .pattern-desc-ar {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.75;
+    margin-bottom: 20px;
+    font-weight: 300;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .pattern-desc-ar {
+    display: none;
+    direction: rtl;
+    text-align: right;
+  }
+
+  .pattern-desc li,
+  .pattern-desc-ar li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .pattern-desc li::before {
+    content: '◆';
+    font-size: 7px;
+    margin-top: 7px;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+
+  .pattern-desc-ar li::before {
+    content: '◆';
+    font-size: 7px;
+    margin-top: 7px;
+    flex-shrink: 0;
+    color: var(--gold);
+    order: 0;
+  }
+
+  /* Ratios badge list */
+  .ratios-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .ratio-badge {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--border-gold);
+    border-radius: 3px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-family: 'Crimson Pro', serif;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+  }
+
+  /* Images row */
+  .images-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .image-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .image-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .image-label.bull { color: var(--bull); }
+  .image-label.bear { color: var(--bear); }
+
+  .image-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+  }
+  .image-label.bull::before { background: var(--bull); }
+  .image-label.bear::before { background: var(--bear); }
+
+  .pattern-img-wrap {
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+
+  .pattern-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .pattern-img-wrap:hover img {
+    transform: scale(1.02);
+  }
+
+  /* ── Ratios Summary Table ── */
+  .ratios-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    scroll-margin-top: 64px;
+    box-shadow: var(--shadow);
+  }
+
+  .rtc-header {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, var(--rtc-grad) 0%, transparent 60%);
+  }
+
+  .rtc-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: var(--purple);
+    letter-spacing: 0.06em;
+  }
+
+  .rtable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .rtable thead tr {
+    background: rgba(167,139,250,0.07);
+  }
+
+  .rtable th {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--purple);
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .rtable td {
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(30,37,53,0.2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .rtable tr:last-child td { border-bottom: none; }
+
+  .rtable tr:hover td {
+    background: rgba(0,0,0,0.02);
+  }
+
+  .rtable td:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    white-space: nowrap;
+    padding-right: 20px;
+  }
+
+  .rtable .r {
+    color: var(--text-primary);
+    font-family: 'Crimson Pro', serif;
+    font-size: 13.5px;
+  }
+
+  /* ── Trading Rules Card ── */
+  .rules-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    scroll-margin-top: 64px;
+    box-shadow: var(--shadow);
+  }
+
+  .rules-header {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, var(--rule-entry-grad) 0%, transparent 60%);
+  }
+
+  .rules-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: var(--bull);
+    letter-spacing: 0.06em;
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+  }
+
+  .rule-block {
+    padding: 26px 28px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rule-block:last-child,
+  .rule-block:nth-child(3n) { border-right: none; }
+
+  .rule-block-title {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rule-block-title.entry { color: var(--bull); }
+  .rule-block-title.sl    { color: var(--bear); }
+  .rule-block-title.tp    { color: var(--blue); }
+  .rule-block-title.conf  { color: var(--purple); }
+  .rule-block-title.rel   { color: var(--gold); }
+
+  .rule-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .rule-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    align-items: flex-start;
+  }
+
+  .rule-list li::before {
+    content: '◆';
+    font-size: 7px;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .rule-block.entry .rule-list li::before { color: var(--bull); }
+  .rule-block.sl    .rule-list li::before { color: var(--bear); }
+  .rule-block.tp    .rule-list li::before { color: var(--blue); }
+  .rule-block.conf  .rule-list li::before { color: var(--purple); }
+  .rule-block.rel   .rule-list li::before { color: var(--gold); }
+
+  .stars { color: var(--gold); font-size: 18px; letter-spacing: 2px; }
+  .star-empty { color: var(--border); }
+
+  .rule-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  /* ── Arabic Mode ── */
+  body.ar .lang-toggle { order: -1; }
+  /* Keep controls fixed on the right regardless of language */
+  body.ar .controls-row { flex-direction: row-reverse; }
+  body.ar .pattern-desc { display: none !important; }
+  body.ar .pattern-desc-ar { display: flex !important; }
+  body.ar .card-title { display: none; }
+  body.ar .card-title-ar { display: block; text-align: right; direction: rtl; }
+
+  body.ar .nav-inner { direction: rtl; }
+  /* Push card-header content to the right */
+  body.ar .card-header { flex-direction: row-reverse; justify-content: flex-end; text-align: right; }
+  body.ar .card-header .card-index { order: 1; }
+  body.ar .card-header .card-title-ar { order: 2; }
+  /* Push section-label content to the right */
+  body.ar .section-label { flex-direction: row-reverse; justify-content: flex-end; text-align: right; direction: rtl; }
+  body.ar .section-label::before { order: 1; }
+  body.ar .ratios-row { direction: ltr; }
+
+  body.ar .rule-block { text-align: right; }
+  body.ar .rule-list li { flex-direction: row-reverse; }
+  body.ar .pattern-desc-ar li { flex-direction: row-reverse; }
+  body.ar .pattern-desc-ar li::before { order: 1; }
+
+  body.ar .rtable th, body.ar .rtable td { text-align: right; }
+  body.ar .rtable td:first-child { text-align: right; }
+  body.ar .image-label { flex-direction: row-reverse; }
+  body.ar .image-label::before { order: 1; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .images-row { grid-template-columns: 1fr; }
+    .card-body { padding: 20px 18px; }
+    .card-header { padding: 18px 18px 14px; }
+    .rtable th, .rtable td { padding: 9px 10px; }
+    .rule-block { border-right: none; }
+    .controls-row { top: 12px; right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CONTROLS ROW (theme + language) -->
+<div class="controls-row">
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">☀️</button>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <p class="header-eyebrow" data-en="Harmonic Trading Reference" data-ar="أنماط الهارمونيك في التداول">Harmonic Trading Reference</p>
+  <h1 data-en="Harmonic Patterns" data-ar="الأنماط الهارمونية">Harmonic Patterns</h1>
+  <p class="header-sub" data-en="A complete visual reference to the Fibonacci-based price reversal structures" data-ar="مرجع بصري شامل للهياكل السعرية الانعكاسية المبنية على نسب فيبوناتشي">A complete visual reference to the Fibonacci-based price reversal structures defined by Scott Carney</p>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-pill" onclick="navScrollTo('gartley', this)" data-en="Gartley" data-ar="غارتلي">Gartley</button>
+    <button class="nav-pill" onclick="navScrollTo('bat', this)" data-en="Bat" data-ar="الخفاش">Bat</button>
+    <button class="nav-pill" onclick="navScrollTo('altbat', this)" data-en="Alt Bat" data-ar="الخفاش البديل">Alt Bat</button>
+    <button class="nav-pill" onclick="navScrollTo('butterfly', this)" data-en="Butterfly" data-ar="الفراشة">Butterfly</button>
+    <button class="nav-pill" onclick="navScrollTo('crab', this)" data-en="Crab" data-ar="السرطان">Crab</button>
+    <button class="nav-pill" onclick="navScrollTo('deepcrab', this)" data-en="Deep Crab" data-ar="السرطان العميق">Deep Crab</button>
+    <button class="nav-pill" onclick="navScrollTo('cypher', this)" data-en="Cypher" data-ar="الشفرة">Cypher</button>
+    <button class="nav-pill" onclick="navScrollTo('shark', this)" data-en="Shark" data-ar="القرش">Shark</button>
+    <button class="nav-pill" onclick="navScrollTo('abcd', this)" data-en="AB=CD" data-ar="AB=CD">AB=CD</button>
+    <button class="nav-pill" onclick="navScrollTo('altabcd', this)" data-en="Alt AB=CD" data-ar="البديل AB=CD">Alt AB=CD</button>
+    <button class="nav-pill" onclick="navScrollTo('p50', this)" data-en="5-0" data-ar="نمط 5-0">5-0</button>    
+    <button class="nav-pill" onclick="navScrollTo('ratiosum', this)" data-en="📐 Summary (Ratios)" data-ar="📐 ملخص (نسب)">📐 Summary (Ratios)</button>
+    <button class="nav-pill" onclick="navScrollTo('rules', this)" data-en="⚙ Trading Rules" data-ar="⚙ قواعد التداول">⚙ Trading Rules</button>
+  </div>
+</nav>
+
+<main>
+
+<p class="section-label" data-en="Pattern Library" data-ar="مكتبة الأنماط">Pattern Library</p>
+
+<!-- Gartley -->
+<div class="pattern-card" id="gartley">
+  <div class="card-header">
+    <span class="card-index">01</span>
+    <h2 class="card-title">Gartley Pattern</h2>
+    <h2 class="card-title-ar">نمط غارتلي</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>5-point harmonic pattern (X-A-B-C-D)</span></li>
+      <li><span>XA is the largest move</span></li>
+      <li><span>B retraces 0.618 of XA</span></li>
+      <li><span>D completes at 0.786 of XA</span></li>
+      <li><span>Requires clear AB=CD</span></li>
+      <li><span>Confluence defines strong PRZ</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>نموذج هارمونيك من 5 نقاط (X-A-B-C-D)</span></li>
+      <li><span>الضلع XA هو الأكبر</span></li>
+      <li><span>النقطة B عند 0.618 من XA</span></li>
+      <li><span>النقطة D عند 0.786 من XA</span></li>
+      <li><span>يعتمد على AB=CD</span></li>
+      <li><span>التقاء النسب يحدد منطقة انعكاس قوية</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B = 0.618 XA</span>
+      <span class="ratio-badge">BC = 0.382–0.886 AB</span>
+      <span class="ratio-badge">CD = 1.272–1.618 BC</span>
+      <span class="ratio-badge">D = 0.786 XA</span>
+      <span class="ratio-badge">AB=CD = 1.0 (equiv.)</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/gartley-bull.jpg" alt="Gartley Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/gartley-bear.jpg" alt="Gartley Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bat -->
+<div class="pattern-card" id="bat">
+  <div class="card-header">
+    <span class="card-index">02</span>
+    <h2 class="card-title">Bat Pattern</h2>
+    <h2 class="card-title-ar">نمط الخفاش</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Highly accurate harmonic pattern</span></li>
+      <li><span>B &lt; 0.618 (ideal: 0.50 or 0.382)</span></li>
+      <li><span>D completes at 0.886 of XA</span></li>
+      <li><span>BC projection ≥ 1.618</span></li>
+      <li><span>Uses extended AB=CD (1.27 typical)</span></li>
+      <li><span>Produces sharp reversals with small stop loss</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>من أدق النماذج الهارمونية</span></li>
+      <li><span>B أقل من 0.618 (يفضل 0.50 أو 0.382)</span></li>
+      <li><span>D عند 0.886 من XA</span></li>
+      <li><span>امتداد BC لا يقل عن 1.618</span></li>
+      <li><span>يستخدم AB=CD ممتد (1.27 غالبًا)</span></li>
+      <li><span>انعكاسات حادة مع وقف خسارة صغير</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B = 0.382–0.50 XA</span>
+      <span class="ratio-badge">BC = 1.618–2.618</span>
+      <span class="ratio-badge">D = 0.886 XA</span>
+      <span class="ratio-badge">AB=CD = 1.27 (extended)</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/bat-bull.jpg" alt="Bat Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/bat-bear.jpg" alt="Bat Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alternate Bat -->
+<div class="pattern-card" id="altbat">
+  <div class="card-header">
+    <span class="card-index">03</span>
+    <h2 class="card-title">Alternate Bat Pattern</h2>
+    <h2 class="card-title-ar">نمط الخفاش البديل</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Variation of Bat for failed setups</span></li>
+      <li><span>B ≤ 0.382</span></li>
+      <li><span>D completes at 1.13 of XA</span></li>
+      <li><span>BC ≥ 2.0</span></li>
+      <li><span>Uses 1.618 AB=CD</span></li>
+      <li><span>More extreme than standard Bat</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>نسخة مطورة من Bat</span></li>
+      <li><span>B ≤ 0.382</span></li>
+      <li><span>D عند 1.13 من XA</span></li>
+      <li><span>BC ≥ 2.0</span></li>
+      <li><span>يستخدم AB=CD = 1.618</span></li>
+      <li><span>أكثر حدة من النموذج التقليدي</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B ≤ 0.382 XA</span>
+      <span class="ratio-badge">BC ≥ 2.0</span>
+      <span class="ratio-badge">D = 1.13 XA</span>
+      <span class="ratio-badge">AB=CD = 1.618 (extended)</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/altBat-Bear.jpg" alt="Alt Bat Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/altBat-bull.jpg" alt="Alt Bat Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Butterfly -->
+<div class="pattern-card" id="butterfly">
+  <div class="card-header">
+    <span class="card-index">04</span>
+    <h2 class="card-title">Butterfly Pattern</h2>
+    <h2 class="card-title-ar">نمط الفراشة</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Precise Fibonacci structure</span></li>
+      <li><span>B = 0.786 of XA</span></li>
+      <li><span>XA extension = 1.27</span></li>
+      <li><span>BC ≈ 1.618</span></li>
+      <li><span>Requires AB=CD</span></li>
+      <li><span>Strong reversals at extremes (new highs/lows)</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>نموذج دقيق في نسب فيبوناتشي</span></li>
+      <li><span>B عند 0.786 من XA</span></li>
+      <li><span>امتداد XA = 1.27</span></li>
+      <li><span>BC حوالي 1.618</span></li>
+      <li><span>يتطلب AB=CD</span></li>
+      <li><span>يظهر عند القمم/القيعان القوية</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B = 0.786 XA</span>
+      <span class="ratio-badge">BC = 1.618–2.618</span>
+      <span class="ratio-badge">D = 1.27 XA</span>
+      <span class="ratio-badge">AB=CD = 1.0 or 1.27</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/butterfly-bear.jpg" alt="Butterfly Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/butterfly-bluu.jpg" alt="Butterfly Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Crab -->
+<div class="pattern-card" id="crab">
+  <div class="card-header">
+    <span class="card-index">05</span>
+    <h2 class="card-title">Crab Pattern</h2>
+    <h2 class="card-title-ar">نمط السرطان</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Extreme harmonic extension pattern</span></li>
+      <li><span>D at 1.618 of XA</span></li>
+      <li><span>BC = 2.618 – 3.618</span></li>
+      <li><span>AB=CD less important</span></li>
+      <li><span>Produces very sharp and volatile reversals</span></li>
+      <li><span>Tight PRZ</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>نموذج امتدادي قوي جدًا</span></li>
+      <li><span>D عند 1.618 من XA</span></li>
+      <li><span>BC بين 2.618 و3.618</span></li>
+      <li><span>AB=CD أقل أهمية</span></li>
+      <li><span>انعكاسات عنيفة وسريعة</span></li>
+      <li><span>منطقة انعكاس ضيقة</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B = 0.382–0.618 XA</span>
+      <span class="ratio-badge">BC = 2.618–3.618</span>
+      <span class="ratio-badge">D = 1.618 XA</span>
+      <span class="ratio-badge">AB=CD = 1.27 or 1.618</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/crab-bull.jpg" alt="Crab Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/crab-bear.jpg" alt="Crab Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Deep Crab -->
+<div class="pattern-card" id="deepcrab">
+  <div class="card-header">
+    <span class="card-index">06</span>
+    <h2 class="card-title">Deep Crab Pattern</h2>
+    <h2 class="card-title-ar">نمط السرطان العميق</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Variation of Crab</span></li>
+      <li><span>B = 0.886 of XA</span></li>
+      <li><span>D = 1.618 XA</span></li>
+      <li><span>Strong momentum and aggressive reversals</span></li>
+      <li><span>AB=CD more relevant than regular Crab</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>نسخة من Crab</span></li>
+      <li><span>B عند 0.886</span></li>
+      <li><span>D عند 1.618</span></li>
+      <li><span>تحركات قوية جدًا</span></li>
+      <li><span>AB=CD أكثر أهمية من Crab العادي</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B = 0.886 XA</span>
+      <span class="ratio-badge">BC = 2.24–3.618</span>
+      <span class="ratio-badge">D = 1.618 XA</span>
+      <span class="ratio-badge">AB=CD = 1.27 (alt)</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/deepcrab-bear.jpg" alt="Deep Crab Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/deepcrab-bull.jpg" alt="Deep Crab Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cypher -->
+<div class="pattern-card" id="cypher">
+  <div class="card-header">
+    <span class="card-index">07</span>
+    <h2 class="card-title">Cypher Pattern</h2>
+    <h2 class="card-title-ar">نمط الشفرة</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Unique 4-point harmonic structure (X-A-B-C-D)</span></li>
+      <li><span>B = 0.382–0.618 of XA</span></li>
+      <li><span>C must exceed point A (C = 1.13–1.41 of XA)</span></li>
+      <li><span>D completes at 0.786 retracement of XC</span></li>
+      <li><span>Relatively high win rate</span></li>
+      <li><span>Clear, well-defined PRZ</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>هيكل هارموني فريد من 4 نقاط (X-A-B-C-D)</span></li>
+      <li><span>B بين 0.382 و0.618 من XA</span></li>
+      <li><span>C يجب أن يتجاوز النقطة A (C = 1.13–1.41 من XA)</span></li>
+      <li><span>D عند ارتداد 0.786 من XC</span></li>
+      <li><span>نسبة نجاح مرتفعة نسبياً</span></li>
+      <li><span>منطقة انعكاس واضحة ومحددة</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">B = 0.382–0.618 XA</span>
+      <span class="ratio-badge">C = 1.13–1.41 XA</span>
+      <span class="ratio-badge">D = 0.786 XC</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="img/cypher-bull.png" alt="Cypher Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="img/cypher-bear.png" alt="Cypher Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Shark -->
+<div class="pattern-card" id="shark">
+  <div class="card-header">
+    <span class="card-index">08</span>
+    <h2 class="card-title">Shark Pattern</h2>
+    <h2 class="card-title-ar">نمط القرش</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Precedes 5-0 pattern</span></li>
+      <li><span>Uses 0.886 retracement &amp; 1.13 extension</span></li>
+      <li><span>Based on Extreme Impulse Wave</span></li>
+      <li><span>Fast, aggressive reversals</span></li>
+      <li><span>Requires active trade management</span></li>
+      <li><span>Works well in overextended markets</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>يسبق نموذج 5-0</span></li>
+      <li><span>يعتمد على 0.886 و 1.13</span></li>
+      <li><span>مبني على موجة اندفاع قوية</span></li>
+      <li><span>انعكاسات سريعة وعنيفة</span></li>
+      <li><span>يحتاج إدارة تداول نشطة</span></li>
+      <li><span>مناسب للأسواق المبالغ فيها</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">C = 1.13–1.618 XA</span>
+      <span class="ratio-badge">D = 0.886–1.13 retracement</span>
+      <span class="ratio-badge">Impulse Wave ≥ 1.618</span>
+      <span class="ratio-badge">Precedes 5-0</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/shark-bull.jpg" alt="Shark Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/shark-bear.jpg" alt="Shark Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AB=CD -->
+<div class="pattern-card" id="abcd">
+  <div class="card-header">
+    <span class="card-index">09</span>
+    <h2 class="card-title">AB=CD Pattern</h2>
+    <h2 class="card-title-ar">نمط AB=CD</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Basic harmonic structure</span></li>
+      <li><span>AB = CD</span></li>
+      <li><span>C retracement: 0.382 – 0.886</span></li>
+      <li><span>BC projection: 1.13 – 2.618</span></li>
+      <li><span>Used to identify reversal zones</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>أبسط نموذج هارمونيك</span></li>
+      <li><span>AB يساوي CD</span></li>
+      <li><span>C بين 0.382 و0.886</span></li>
+      <li><span>BC بين 1.13 و2.618</span></li>
+      <li><span>لتحديد مناطق الانعكاس</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">BC = 0.382–0.886 AB</span>
+      <span class="ratio-badge">CD = AB length</span>
+      <span class="ratio-badge">BC proj. = 1.13–2.618</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2023/05/bullabcd-2.png" alt="AB=CD Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2023/05/bearabcd-1.png" alt="AB=CD Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alternate AB=CD -->
+<div class="pattern-card" id="altabcd">
+  <div class="card-header">
+    <span class="card-index">10</span>
+    <h2 class="card-title">Alternate AB=CD Pattern</h2>
+    <h2 class="card-title-ar">نمط AB=CD البديل</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>Uses 1.27 or 1.618 extensions</span></li>
+      <li><span>Applied when AB ≠ CD</span></li>
+      <li><span>Complements Fibonacci confluence</span></li>
+      <li><span>Improves PRZ accuracy</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>يستخدم 1.27 أو 1.618</span></li>
+      <li><span>عند عدم تساوي AB و CD</span></li>
+      <li><span>يدعم التوافق بين النسب</span></li>
+      <li><span>يحسن دقة مناطق الانعكاس</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">1.27 × AB from C</span>
+      <span class="ratio-badge">or 1.618 × AB from C</span>
+      <span class="ratio-badge">Converges with BC proj.</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/alt-bull.jpg" alt="Alt AB=CD Bullish" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/alt-bear.jpg" alt="Alt AB=CD Bearish" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5-0 -->
+<div class="pattern-card" id="p50">
+  <div class="card-header">
+    <span class="card-index">11</span>
+    <h2 class="card-title">5-0 Pattern</h2>
+    <h2 class="card-title-ar">نمط 5-0</h2>
+  </div>
+  <div class="card-body">
+    <ul class="pattern-desc">
+      <li><span>5-point reversal structure</span></li>
+      <li><span>BC = 1.618 – 2.24 of AB</span></li>
+      <li><span>Uses 50% retracement of BC</span></li>
+      <li><span>Uses reciprocal AB=CD</span></li>
+      <li><span>Represents first pullback after reversal</span></li>
+      <li><span>Very precise structure</span></li>
+    </ul>
+    <ul class="pattern-desc-ar">
+      <li><span>نموذج انعكاسي من 5 نقاط</span></li>
+      <li><span>BC بين 1.618 و2.24</span></li>
+      <li><span>يعتمد على تصحيح 50%</span></li>
+      <li><span>يستخدم AB=CD العكسي</span></li>
+      <li><span>أول تصحيح بعد انعكاس الاتجاه</span></li>
+      <li><span>نموذج دقيق جدًا</span></li>
+    </ul>
+    <div class="ratios-row">
+      <span class="ratio-badge">AB ≤ 1.618 XA</span>
+      <span class="ratio-badge">BC = 1.618–2.24 AB</span>
+      <span class="ratio-badge">D = 50% of BC</span>
+      <span class="ratio-badge">Reciprocal AB=CD</span>
+    </div>
+    <div class="images-row">
+      <div class="image-block">
+        <div class="image-label bull" data-en="Bullish" data-ar="صاعد">Bullish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/5-0-bull.jpg" alt="5-0 Bullish Pattern" loading="lazy">
+        </div>
+      </div>
+      <div class="image-block">
+        <div class="image-label bear" data-en="Bearish" data-ar="هابط">Bearish</div>
+        <div class="pattern-img-wrap">
+          <img src="https://harmonictrader.com/wp-content/uploads/2018/05/5-0-bear.jpg" alt="5-0 Bearish Pattern" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ratios Summary Table -->
+<div class="ratios-table-card" id="ratiosum">
+  <div class="rtc-header">
+    <h2 class="rtc-title" data-en="📐 All Patterns — Fibonacci Ratios Reference" data-ar="📐 جميع الأنماط — مرجع نسب فيبوناتشي">📐 All Patterns — Fibonacci Ratios Reference</h2>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="rtable">
+    <thead>
+      <tr>
+        <th data-en="Pattern" data-ar="النمط">Pattern</th>
+        <th data-en="Point B (from XA)" data-ar="تصحيح النقطة B من XA">XA (B Point)</th>
+        <th data-en="Point C (from AB)" data-ar="تصحيح النقطة C من AB">AB (C Point)</th>
+        <th data-en="Point D (from BC)" data-ar="امتداد النقطة D من BC">BC Proj.</th>
+        <th data-en="Point D (from XA)" data-ar="تصحيح النقطة D من XA">XA (D Point)</th>
+        <th data-en="AB=CD" data-ar="AB=CD">AB=CD</th>
+        <th data-en="Key Feature" data-ar="الميزة الرئيسية">Key Feature</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gartley</td>
+        <td class="r">0.618</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">1.13–1.618</td>
+        <td class="r">0.786</td>
+        <td class="r">1.0 (equiv.)</td>
+        <td class="r">Classic; D must not exceed X</td>
+      </tr>      
+      <tr>
+        <td>Bat</td>
+        <td class="r">0.382–0.50</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">1.618–2.618</td>
+        <td class="r">0.886</td>
+        <td class="r">1.27 (extended)</td>
+        <td class="r">Most accurate; smallest SL</td>
+      </tr>      
+      <tr>
+        <td>Alt Bat</td>
+        <td class="r">≤ 0.382</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">2.0-3.618</td>
+        <td class="r">1.13</td>
+        <td class="r">1.618 (extended)</td>
+        <td class="r">RSI BAMM divergence ideal</td>
+      </tr>
+      <tr>
+        <td>Butterfly</td>
+        <td class="r">0.786 (mandatory)</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">1.618–2.618</td>
+        <td class="r">1.27-1.618</td>
+        <td class="r">1.0 or 1.27</td>
+        <td class="r">Powerful at all-time highs/lows</td>
+      </tr>
+      <tr>
+        <td>Crab</td>
+        <td class="r">0.382–0.618</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">2.618–3.618</td>
+        <td class="r">1.618</td>
+        <td class="r">1.27 or 1.618</td>
+        <td class="r">Most extreme; sharpest reversals</td>
+      </tr>
+      <tr>
+        <td>Deep Crab</td>
+        <td class="r">0.886</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">2.0–3.618</td>
+        <td class="r">1.618</td>
+        <td class="r">1.27 (alt)</td>
+        <td class="r">Deep B; violates two S/R levels</td>
+      </tr>
+      <tr>
+        <td>Cypher</td>
+        <td class="r">0.382–0.618</td>
+        <td class="r">1.13–1.41</td>
+        <td class="r">1.272–2.00</td>
+        <td class="r">0.786 XC</td>
+        <td class="r">—</td>
+        <td class="r">C Must exceed A</td>
+      </tr>      
+      <tr>
+        <td>Shark</td>
+        <td class="r">1.13–1.618</td>
+        <td class="r">1.618-2.24</td>
+        <td class="r">—</td>
+        <td class="r">—</td>
+        <td class="r">—</td>
+        <td class="r">Precedes 5-0; counter-trend only</td>
+      </tr>
+      <tr>
+        <td>AB=CD</td>
+        <td class="r">—</td>
+        <td class="r">0.382–0.886</td>
+        <td class="r">1.13–2.618</td>
+        <td class="r">—</td>
+        <td class="r">CD = AB (equiv.)</td>
+        <td class="r">Foundation of all harmonic patterns</td>
+      </tr>
+      <tr>
+        <td>Alt AB=CD</td>
+        <td class="r">—</td>
+        <td class="r">varies</td>
+        <td class="r">varies</td>
+        <td class="r">—</td>
+        <td class="r">1.27 or 1.618 × AB</td>
+        <td class="r">Complements non-equiv. structures</td>
+      </tr>
+      <tr>
+        <td>5-0</td>
+        <td class="r">≤ 1.618 (X→A)</td>
+        <td class="r">BC = 1.618–2.24 AB</td>
+        <td class="r">1.618–2.24</td>
+        <td class="r">50% of BC</td>
+        <td class="r">Reciprocal AB=CD</td>
+        <td class="r">First pullback of major reversal</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Trading Rules Card -->
+<div class="rules-card" id="rules">
+  <div class="rules-header">
+    <h2 class="rules-title" data-en="⚙ Universal Trading Rules" data-ar="⚙ قواعد التداول الشاملة">⚙ Universal Trading Rules</h2>
+  </div>
+  <div class="rules-grid">
+
+    <div class="rule-block entry">
+      <div class="rule-block-title entry" data-en="Entry Rules" data-ar="قواعد الدخول">Entry Rules</div>
+      <ul class="rule-list">
+        <li><span data-en="Entry at Point D (PRZ completion)" data-ar="الدخول عند النقطة D (اكتمال منطقة الانعكاس)">Entry at Point D (PRZ completion)</span></li>
+        <li><span data-en="Confirmation: RSI divergence (optional)" data-ar="تأكيد: انحراف RSI (اختياري)">Confirmation: RSI divergence (optional)</span></li>
+        <li><span data-en="Confirmation: Candle reversal pattern" data-ar="تأكيد: نمط شمعة انعكاسي">Confirmation: Candle reversal pattern</span></li>
+        <li><span data-en="Wait for price to enter PRZ, not anticipate" data-ar="انتظر دخول السعر في منطقة الانعكاس، لا تتوقعها">Wait for price to enter PRZ, not anticipate</span></li>
+      </ul>
+    </div>
+
+    <div class="rule-block sl">
+      <div class="rule-block-title sl" data-en="Stop Loss" data-ar="وقف الخسارة">Stop Loss</div>
+      <ul class="rule-list">
+        <li><span data-en="Beyond Point X (pattern invalidation)" data-ar="ما وراء النقطة X (إبطال النمط)">Beyond Point X (pattern invalidation)</span></li>
+        <li><span data-en="Or beyond Point D extreme (tight SL)" data-ar="أو ما وراء حد النقطة D (وقف خسارة ضيق)">Or beyond Point D extreme (tight SL)</span></li>
+        <li><span data-en="Can be defined by your own system's rules" data-ar="يمكن تحديده وفق قواعد نظامك الخاص">Can be defined by your own system's rules</span></li>
+        <li><span data-en="Break of 1.41 of XA" data-ar="1.41 من XA كسر مستوى">Break of 1.41 of XA</span></li>
+      </ul>
+    </div>
+
+    <div class="rule-block tp">
+      <div class="rule-block-title tp" data-en="Targets (TP Levels)" data-ar="الأهداف (مستويات الربح)">Targets (TP Levels)</div>
+      <ul class="rule-list">
+        <li><span data-en="TP1 — 38.2% of AD leg" data-ar="الهدف 1 — 38.2% من ضلع AD">TP1 — 38.2% of AD leg</span></li>
+        <li><span data-en="TP2 — 61.8% of AD leg" data-ar="الهدف 2 — 61.8% من ضلع AD">TP2 — 61.8% of AD leg</span></li>
+        <li><span data-en="TP3 — Point A (full retracement)" data-ar="الهدف 3 — النقطة A (ارتداد كامل)">TP3 — Point A (full retracement)</span></li>
+      </ul>
+    </div>
+
+    <div class="rule-block conf">
+      <div class="rule-block-title conf" data-en="Confluence Factors" data-ar="عوامل التقارب">Confluence Factors</div>
+      <ul class="rule-list">
+        <li><span data-en="PRZ — Potential Reversal Zone alignment" data-ar="PRZ — تقارب منطقة الانعكاس المحتملة">PRZ — Potential Reversal Zone alignment</span></li>
+        <li><span data-en="Key Support / Resistance levels" data-ar="مستويات الدعم والمقاومة الرئيسية">Key Support / Resistance levels</span></li>
+        <li><span data-en="Volume spike at completion" data-ar="ارتفاع حجم التداول عند الاكتمال">Volume spike at completion</span></li>
+        <li><span data-en="VWAP / EMA confluence" data-ar="تقارع VWAP / المتوسط المتحرك الأسي">VWAP / EMA confluence</span></li>
+      </ul>
+    </div>
+
+    <div class="rule-block rel">
+      <div class="rule-block-title rel" data-en="Reliability Score" data-ar="درجة الموثوقية">Reliability Score</div>
+      <ul class="rule-list">
+        <li>
+          <span>
+            <span data-en="Gartley" data-ar="غارتلي">Gartley</span>:
+            <span class="stars">★★★★★</span>
+          </span>
+        </li>
+        <li>
+          <span>
+            <span data-en="Bat" data-ar="الخفاش">Bat</span>:
+            <span class="stars">★★★★★</span>
+          </span>
+        </li>
+        <li>
+          <span>
+            <span data-en="Butterfly" data-ar="الفراشة">Butterfly</span>:
+            <span class="stars">★★★★<span class="star-empty">★</span></span>
+          </span>
+        </li>
+        <li>
+          <span>
+            <span data-en="Crab" data-ar="السرطان">Crab</span>:
+            <span class="stars">★★★★<span class="star-empty">★</span></span>
+          </span>
+        </li>
+        <li>
+          <span>
+            <span data-en="5-0 / Shark" data-ar="5-0 / القرش">5-0 / Shark</span>:
+            <span class="stars">★★★<span class="star-empty">★★</span></span>
+          </span>
+        </li>
+      </ul>
+      <p class="rule-note" data-en="⚠ Reliability scoring to be calibrated with live data in future updates." data-ar="⚠ درجات الموثوقية ستُحدَّث وفق بيانات السوق الفعلية في الإصدارات القادمة.">⚠ Reliability scoring to be calibrated with live data in future updates.</p>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<footer style="text-align:center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px;">
+  <span data-en="Pattern definitions sourced from HarmonicTrader.com by Scott M. Carney. For educational purposes only." data-ar="تعريفات الأنماط مصدرها HarmonicTrader.com — سكوت كارني. للأغراض التعليمية فقط.">Pattern definitions sourced from HarmonicTrader.com by Scott M. Carney. For educational purposes only.</span>
+</footer>
+
+<script>
+  /* ── Theme Toggle (Light default) ── */
+  let isDark = false;
+
+  function toggleTheme() {
+    isDark = !isDark;
+    document.body.classList.toggle('dark', isDark);
+    document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('harmonicTheme', isDark ? 'dark' : 'light');
+  }
+
+  // Restore saved preference (light is default)
+  (function() {
+    const saved = localStorage.getItem('harmonicTheme');
+    if (saved === 'dark') {
+      isDark = true;
+      document.body.classList.add('dark');
+      document.getElementById('themeBtn').textContent = '🌙';
+    }
+  })();
+
+  /* ── Language Toggle ── */
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const isAr = lang === 'ar';
+    const body = document.body;
+    body.classList.toggle('ar', isAr);
+    body.setAttribute('lang', lang);
+    body.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+
+    // Update text content for all translatable elements
+    // Exclude card titles and descriptions (handled by CSS show/hide)
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const tag = el.tagName.toLowerCase();
+      const cls = el.className || '';
+      const skip = cls.includes('card-title') || cls.includes('pattern-desc') || cls.includes('lang-btn');
+      if (!skip) {
+        el.textContent = el.getAttribute(isAr ? 'data-ar' : 'data-en');
+      }
+    });
+
+    // Update lang buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if ((lang === 'ar' && btn.textContent === 'عربي') ||
+          (lang === 'en' && btn.textContent === 'EN')) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  /* ── Nav Scroll ── */
+  function navScrollTo(id, btn) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  /* ── Highlight nav on scroll ── */
+  const sections = ['gartley','bat','altbat','butterfly','crab','deepcrab','cypher','shark','abcd','altabcd','p50','ratiosum','rules'];
+  const pills = document.querySelectorAll('.nav-pill');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sections.indexOf(entry.target.id);
+        if (idx !== -1) {
+          pills.forEach(p => p.classList.remove('active'));
+          if (pills[idx]) pills[idx].classList.add('active');
+        }
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  /* Init text translations for non-card elements */
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const cls = el.className || '';
+    const skip = cls.includes('card-title') || cls.includes('pattern-desc') || cls.includes('lang-btn');
+    if (!skip) {
+      el.textContent = el.getAttribute('data-en');
+    }
+  });
+</script>
+</body>
+</html>
